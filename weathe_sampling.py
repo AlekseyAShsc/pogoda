@@ -56,10 +56,12 @@ def sampling_month():
             # blok.find('a').get('href')
             # calendar_temp = days.find('span', class_='month-calendar-temp').find_all('span').string
             calendar_temp = days.find('span', class_='month-calendar-temp').text.replace(' ', '').split('\n')[:2]
+            calendar_temp_morning = calendar_temp[0]
+            calendar_temp_evening = calendar_temp[1]
             # calendar_temp_2 = calendar_temp.find('span').text
             # for day_tamp in calendar_temp.find_all('span'):
             #     logging.info(f"day_tamp.string = {day_tamp.string}")
-            logging.info(f"{calendar_month_chareds} / {calendar_day_chareds} / {calendar_temp}")
+            logging.info(f"{calendar_day_chareds} : {calendar_month_chareds} - Утром = {calendar_temp_morning}. Вечером = {calendar_temp_evening}")
             # Вариант 2
             # logging.info(f"days.find_all('span') = {days.find_all('span')}")
 
@@ -68,4 +70,4 @@ def sampling_month():
 
 if __name__ == '__main__':
     # pass
-    sampling_month(read_text())
+    sampling_month()
