@@ -56,3 +56,7 @@ def reader_url_saved_text(data_url, url_pogoda1="https://pogoda1.ru/oktyabrsky-1
             logging.info(f"Сnраница-{url} сохранена в файл url_all\\index_{data_url}.html")
     except Exception as ex:
         logging.error(f"Ошибка, {ex}, при сохранении файла - url_all\\index_{data_url}.html")
+
+
+if __name__ == '__main__':
+    pass
