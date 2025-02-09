@@ -1,6 +1,8 @@
 # нои настройки
 settings.py
 readmi.txt
+url_all/
+*.html
 
 
 # Byte-compiled / optimized / DLL files
