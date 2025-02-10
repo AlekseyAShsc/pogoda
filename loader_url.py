@@ -44,16 +44,16 @@ def reader_url_saved_text(data_url, url_pogoda1="https://pogoda1.ru/oktyabrsky-1
         url = f'{url_pogoda1}{data_url}/'
         reg = requests.get(url, cookies=cookies, headers=headers)
         text_html = reg.text
-        logging.info(f"Страница {url} загружена.")
+        logging.info(f"Страница //{url}// выдалв ответ = {reg}.")
     except Exception as ex:
         logging.error(f"Ошибка, {ex}, при чтении страницы {url}")
     try:
         with open("index.html", "w", encoding="utf-8") as file:
             file.write(text_html)
-            logging.info(f"Сnраница-{url} сохранена в файлe index.html")
+            # logging.info(f"Сnраница-{url} сохранена в файлe index.html")
         with open(f"url_all/index_{data_url}.html", "w", encoding="utf-8") as file:
             file.write(text_html)
-            logging.info(f"Сnраница-{url} сохранена в файл url_all\\index_{data_url}.html")
+            # logging.info(f"Сnраница-{url} сохранена в файл url_all\\index_{data_url}.html")
     except Exception as ex:
         logging.error(f"Ошибка, {ex}, при сохранении файла - url_all\\index_{data_url}.html")
 

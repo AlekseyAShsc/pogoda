@@ -3,14 +3,14 @@ from bs4 import BeautifulSoup
 import pandas as pd
 
 
-logging.basicConfig(
-    filename="pogoda.log",
-    # format='%(asctime)s - %(filename)s - %(name)s - %(levelname)s - %(funcName)s - %(message)s',
-    format= '%(levelname)-8s [%(asctime)s] - %(filename)-25s:'\
-        '%(lineno)d - %(name)s - %(message)s',
-    level=logging.DEBUG,
-    filemode="w"
-)
+# logging.basicConfig(
+#     filename="pogoda.log",
+#     # format='%(asctime)s - %(filename)s - %(name)s - %(levelname)s - %(funcName)s - %(message)s',
+#     format= '%(levelname)-8s [%(asctime)s] - %(filename)-25s:'\
+#         '%(lineno)d - %(name)s - %(message)s',
+#     level=logging.DEBUG,
+#     filemode="w"
+# )
 
 logger = logging.getLogger(__name__)
 
@@ -40,7 +40,7 @@ def read_text():
         logging.error(f"Ошибка чтения из файла. Ошибка {err}")
 
 
-def sampling_month():
+def sampling_month(year_select):
     bs = read_text()
     # logging.info(f"Разбираем bs, {type(bs)}")
     month_period = bs.find_all('a', class_='calendar-item')
@@ -71,7 +71,7 @@ def sampling_month():
                 # logging.info(f"{calendar_day_chareds} : {calendar_month_chareds} - Утром = {calendar_temp_morning}. Вечером = {calendar_temp_evening}")
             result.append(
                 {
-                    "Год": 2025,
+                    "Год": year_select,
                     "Месяц": calendar_month_chareds,
                     "День": calendar_day_chareds,
                     "Погода утром": calendar_temp_morning,
