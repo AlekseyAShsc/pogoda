@@ -6,7 +6,9 @@ logger = logging.getLogger(__name__)
 
 
 # чтение данных с сайта и сохранение в файле index.html. Главная страница и страница модели
-def reader_url_saved_text(data_url, url_pogoda1="https://pogoda1.ru/oktyabrsky-11/"):
+# https://pogoda1.ru/oktyabrsky-11/01-01/#year-2024 - 1 января
+# https://pogoda1.ru/oktyabrsky-11/02-01/#year-2024 - 2 января
+def reader_url_saved_text(data_url, prifiks="/#year-2024", url_pogoda1="https://pogoda1.ru/oktyabrsky-11/"):
     # https://pogoda1.ru/oktyabrsky-11/january-2025/
     try:
         cookies = {
@@ -37,11 +39,7 @@ def reader_url_saved_text(data_url, url_pogoda1="https://pogoda1.ru/oktyabrsky-1
             'upgrade-insecure-requests': '1',
             'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36 OPR/116.0.0.0 (Edition Yx)',
         }
-        # uar = UserAgent()
-        # UserAg_random = uar.random
-        # print(UserAg_random)
-        # собираем сстылку на страница как нам надо (тут формат "https://pogoda1.ru/oktyabrsky-11/january-2025/")
-        url = f'{url_pogoda1}{data_url}/'
+        url = f'{url_pogoda1}{data_url}{prifiks}'
         reg = requests.get(url, cookies=cookies, headers=headers)
         text_html = reg.text
         logging.info(f"Страница //{url}// выдалв ответ = {reg}.")
@@ -59,4 +57,4 @@ def reader_url_saved_text(data_url, url_pogoda1="https://pogoda1.ru/oktyabrsky-1
 
 
 if __name__ == '__main__':
-    pass
+    reader_url_saved_text("02-01")
