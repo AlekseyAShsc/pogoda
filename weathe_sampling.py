@@ -1,5 +1,6 @@
 import logging
 from bs4 import BeautifulSoup
+import pandas as pd
 
 
 logging.basicConfig(
@@ -41,33 +42,54 @@ def read_text():
 
 def sampling_month():
     bs = read_text()
-    logging.info(f"Разбираем bs, {type(bs)}")
+    # logging.info(f"Разбираем bs, {type(bs)}")
     month_period = bs.find_all('a', class_='calendar-item')
-    logging.info(f"month_period = {type(bs)}")
+    # logging.info(f"month_period = {type(bs)}")
+    result = []
     for days in month_period:
-        # logging.info(days)
-        # logging.info(type(days))
         if not days.find('span', class_='no-data'):
-            # Вариант 1
-            #calendar_day = (days.find('span', class_='month-calendar-day')).string
-            calendar_month = (days['href']).split('/')[2]
-            calendar_month_chareds = int(calendar_month.split('-')[1])
-            calendar_day_chareds = int(calendar_month.split('-')[0])
-            # blok.find('a').get('href')
-            # calendar_temp = days.find('span', class_='month-calendar-temp').find_all('span').string
-            calendar_temp = days.find('span', class_='month-calendar-temp').text.replace(' ', '').split('\n')[:2]
+            try:
+                calendar_month = (days['href']).split('/')[2]
+                calendar_month_chareds = int(calendar_month.split('-')[1])
+            except:
+                calendar_month = "нет данных"
+                calendar_month_chareds = "нет данных"
+                logging.error(f"Нет месяца. {days}")
+            try:
+                calendar_day_chareds = int(calendar_month.split('-')[0])
+            except:
+                calendar_day_chareds = "нет данных"
+                logging.error(f"Нет дня. {days}")
+            try:
+                calendar_temp = days.find('span', class_='month-calendar-temp').text.replace(' ', '').split('\n')[:2]
+            except:
+                calendar_temp = ["Нет данных", "Нет данных"]
+                logging.error(f"Нет температуры. {days}")
+
             calendar_temp_morning = calendar_temp[0]
             calendar_temp_evening = calendar_temp[1]
-            # calendar_temp_2 = calendar_temp.find('span').text
-            # for day_tamp in calendar_temp.find_all('span'):
-            #     logging.info(f"day_tamp.string = {day_tamp.string}")
-            logging.info(f"{calendar_day_chareds} : {calendar_month_chareds} - Утром = {calendar_temp_morning}. Вечером = {calendar_temp_evening}")
-            # Вариант 2
-            # logging.info(f"days.find_all('span') = {days.find_all('span')}")
+                # logging.info(f"{calendar_day_chareds} : {calendar_month_chareds} - Утром = {calendar_temp_morning}. Вечером = {calendar_temp_evening}")
+            result.append(
+                {
+                    "Год": 2025,
+                    "Месяц": calendar_month_chareds,
+                    "День": calendar_day_chareds,
+                    "Погода утром": calendar_temp_morning,
+                    "Погода вечером": calendar_temp_evening,
+                }
+            )
+    return result
 
 
+def save_csv(dann_temperatur):
+
+    # Создание DataFrame
+    df = pd.DataFrame(dann_temperatur)
+    # Экспорт в CSV с помощью Pandas
+    df.to_csv('output_with_pandas.csv', index=False, sep=";", mode='a', header=False, encoding='utf-8')
+    logging.info("Данные сохранены в CSV")
 
 
 if __name__ == '__main__':
     # pass
-    sampling_month()
+    save_csv(sampling_month())
