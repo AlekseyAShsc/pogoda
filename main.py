@@ -9,8 +9,9 @@ from weathe_sampling import sampling_month, save_csv
 
 logging.basicConfig(
     filename="pogoda.log",
-    # format='%(asctime)s - %(filename)s - %(name)s - %(levelname)s - %(funcName)s - %(message)s',
-    format='%(levelname)-8s [%(asctime)s] - %(filename)-25s:'\
+    # format='%(asctime)s - %(filename)s - %(name)s -
+    #           %(levelname)s - %(funcName)s - %(message)s',
+    format='%(levelname)-8s [%(asctime)s] - %(filename)-25s:'
            '%(lineno)d - %(name)s - %(message)s',
     level=logging.ERROR
 )
@@ -25,20 +26,24 @@ if __name__ == '__main__':
     kolvo = 0
 
     # Начальная дата
-    start_date = date(2024, 1, 1)
+    start_date = date(2024, 1, 5)
     # Конечная дата
     end_date = date(2024, 1, 5)
 
     # Цикл по датам в формате 01-01
-    for n in range(int ((end_date - start_date).days)+1):
-        data_range = (start_date + timedelta(n)).strftime('%d-%m') # сада дата
-        reader_url_saved_text(data_range) # Сохраняем старницу
-        forecast_day_info, forecast_day_times = sampling_month() # Читаем и выбирает нужные данные
-        save_csv(forecast_day_info, forecast_day_times) # Сохраняем в два файла выбранные данные
+    for n in range(int((end_date - start_date).days)+1):
+        data_range = (start_date + timedelta(n)).strftime('%d-%m')  # сада дата
+        reader_url_saved_text(data_range)  # Сохраняем старницу
+        # Читаем и выбирает нужные данные
+        forecast_day_info, forecast_day_times = sampling_month()
+        # Сохраняем в два файла выбранные данные
+        save_csv(forecast_day_info, forecast_day_times)
         sleep_g = random.randint(6, 15)
         sleep_sum += sleep_g
-        print(f'Пауза перед новым месяцем - {sleep_g} c.  / --------------{data_range}---------------/')
-        logging.info(f'Пауза перед новым месяцем - {sleep_g} c. / --------------{data_range}---------------/')
+        print(
+            f'Пауза перед новым месяцем - {sleep_g} c.  / --------------{data_range}---------------/')
+        logging.info(
+            f'Пауза перед новым месяцем - {sleep_g} c. / --------------{data_range}---------------/')
         time.sleep(sleep_g)
     konec = datetime.now()
     print(f'{konec} - {nacalo} = {konec-nacalo}')
