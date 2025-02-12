@@ -8,7 +8,7 @@ logger = logging.getLogger(__name__)
 # чтение данных с сайта и сохранение в файле index.html. Главная страница и страница модели
 # https://pogoda1.ru/oktyabrsky-11/01-01/#year-2024 - 1 января
 # https://pogoda1.ru/oktyabrsky-11/02-01/#year-2024 - 2 января
-def reader_url_saved_text(data_url, prifiks="/#year-2024", url_pogoda1="https://pogoda1.ru/oktyabrsky-11/"):
+def reader_url_saved_text(data_url, prifiks="/#year-2024",  url_pogoda1="https://pogoda1.ru/oktyabrsky-11/"):
     # https://pogoda1.ru/oktyabrsky-11/january-2025/
     try:
         cookies = {

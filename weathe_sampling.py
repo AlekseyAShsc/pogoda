@@ -3,14 +3,14 @@ from bs4 import BeautifulSoup
 import pandas as pd
 
 
-logging.basicConfig(
-    filename="pogoda.log",
-    # format='%(asctime)s - %(filename)s - %(name)s - %(levelname)s - %(funcName)s - %(message)s',
-    format= '%(levelname)-8s [%(asctime)s] - %(filename)-25s:'\
-        '%(lineno)d - %(name)s - %(message)s',
-    level=logging.DEBUG,
-    filemode="w"
-)
+# logging.basicConfig(
+#     filename="pogoda.log",
+#     # format='%(asctime)s - %(filename)s - %(name)s - %(levelname)s - %(funcName)s - %(message)s',
+#     format= '%(levelname)-8s [%(asctime)s] - %(filename)-25s:'\
+#         '%(lineno)d - %(name)s - %(message)s',
+#     level=logging.DEBUG,
+#     filemode="w"
+# )
 
 logger = logging.getLogger(__name__)
 
@@ -63,51 +63,51 @@ def sampling_month():
                 logging.info(f"Время = {cell_forecast_time}")
             except:
                 cell_forecast_time = "нет данных"
-                logging.error(f"Нет данных по временни. {time_of_day}")
+                logging.error(f"Нет данных по временни. {calendar_day_chareds}:{calendar_month_chareds}:{calendar_year_chareds} на {cell_forecast_time}")
             try:
                 cell_forecast_main = time_of_day.find('div', class_='cell-forecast-main').text.replace('\n', '')
                 logging.info(f"Облачность = {cell_forecast_main}")
             except:
                 cell_forecast_main = "нет данных"
-                logging.error(f"Нет данных по облочности. {time_of_day}")
+                logging.error(f"Нет данных по облочности. {calendar_day_chareds}:{calendar_month_chareds}:{calendar_year_chareds} на {cell_forecast_time}")
             try:
                 cell_forecast_temp = time_of_day.find('div', class_='cell-forecast-temp').text
                 logging.info(f"Температура = {cell_forecast_temp}")
             except:
                 cell_forecast_temp = "нет данных"
-                logging.error(f"Нет данных по температуры. {time_of_day}")
+                logging.error(f"Нет данных по температуры. {calendar_day_chareds}:{calendar_month_chareds}:{calendar_year_chareds} на {cell_forecast_time}")
             cell_forecast_wind = time_of_day.find('div', class_='cell-forecast-wind')
             try:
                 cell_forecast_wind_direction = cell_forecast_wind.img['title']
                 logging.info(f"Направление ветра = {cell_forecast_wind_direction}")
             except:
                 cell_forecast_wind_direction = "нет данных"
-                logging.error(f"Нет данных по направлению ветра. {time_of_day}")
+                logging.error(f"Нет данных по направлению ветра. {calendar_day_chareds}:{calendar_month_chareds}:{calendar_year_chareds} на {cell_forecast_time}")
             try:
                 cell_forecast_wind_strength = cell_forecast_wind.find('span', class_='wind-amount').text
                 logging.info(f"Сила ветра = {cell_forecast_wind_strength}")
             except:
                 cell_forecast_wind_strength = "нет данных"
-                logging.error(f"Нет данных по силе ветра. {time_of_day}")
+                logging.error(f"Нет данных по силе ветра. {calendar_day_chareds}:{calendar_month_chareds}:{calendar_year_chareds} на {cell_forecast_time}")
 
             try:
                 cell_forecast_press = time_of_day.find('div', class_='cell-forecast-press').text
                 logging.info(f"Давление = {cell_forecast_press}")
             except:
                 cell_forecast_press = "нет данных"
-                logging.error(f"Нет данных по давлению. {time_of_day}")
+                logging.error(f"Нет данных по давлению. {calendar_day_chareds}:{calendar_month_chareds}:{calendar_year_chareds} на {cell_forecast_time}")
             try:
                 cell_forecast_hum = time_of_day.find('div', class_='cell-forecast-hum').text
                 logging.info(f"Влажность = {cell_forecast_hum}")
             except:
                 cell_forecast_hum = "нет данных"
-                logging.error(f"Нет данных по влажности. {time_of_dayays}")
+                logging.error(f"Нет данных по влажности. {calendar_day_chareds}:{calendar_month_chareds}:{calendar_year_chareds} на {cell_forecast_time}")
             try:
                 cell_forecast_prec = time_of_day.find('div', class_='cell-forecast-prec').text
                 logging.info(f"Осадки = {cell_forecast_hum}")
             except:
                 cell_forecast_prec = "нет данных"
-                logging.error(f"Нет данных по осадкам. {time_of_day}")
+                logging.error(f"Нет данных по осадкам. {calendar_day_chareds}:{calendar_month_chareds}:{calendar_year_chareds} на {cell_forecast_time}")
 
             forecast_day_times.append(
                 {
