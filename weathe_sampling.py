@@ -56,31 +56,78 @@ def sampling_month():
             info_moon = "нет данных"
             info_sun = "нет данных"
             logging.error(f"Нет данных. Видимость-{info_visibl},луна -{info_moon}, солнце - {info_sun}")
+        for time_of_day in days.find_all('div', class_='row-forecast-time-of-day'):
+            # logging.info(f"logging.info = {time_of_day}")
+            try:
+                cell_forecast_time = time_of_day.find('div', class_='cell-forecast-time').text
+                logging.info(f"Время = {cell_forecast_time}")
+            except:
+                cell_forecast_time = "нет данных"
+                logging.error(f"Нет данных по временни. {time_of_day}")
+            try:
+                cell_forecast_main = time_of_day.find('div', class_='cell-forecast-main').text.replace('\n', '')
+                logging.info(f"Облачность = {cell_forecast_main}")
+            except:
+                cell_forecast_main = "нет данных"
+                logging.error(f"Нет данных по облочности. {time_of_day}")
+            try:
+                cell_forecast_temp = time_of_day.find('div', class_='cell-forecast-temp').text
+                logging.info(f"Температура = {cell_forecast_temp}")
+            except:
+                cell_forecast_temp = "нет данных"
+                logging.error(f"Нет данных по температуры. {time_of_day}")
+            cell_forecast_wind = time_of_day.find('div', class_='cell-forecast-wind')
+            try:
+                cell_forecast_wind_direction = cell_forecast_wind.img['title']
+                logging.info(f"Направление ветра = {cell_forecast_wind_direction}")
+            except:
+                cell_forecast_wind_direction = "нет данных"
+                logging.error(f"Нет данных по направлению ветра. {time_of_day}")
+            try:
+                cell_forecast_wind_strength = cell_forecast_wind.find('span', class_='wind-amount').text
+                logging.info(f"Сила ветра = {cell_forecast_wind_strength}")
+            except:
+                cell_forecast_wind_strength = "нет данных"
+                logging.error(f"Нет данных по силе ветра. {time_of_day}")
 
-        # try:
-        #     info_visibl = int(calendar_month.split('-')[0])
-        # except:
-        #     info_visibl = "нет данных"
-        #     logging.error(f"Нет дня. {days}")
+            try:
+                cell_forecast_press = time_of_day.find('div', class_='cell-forecast-press').text
+                logging.info(f"Давление = {cell_forecast_press}")
+            except:
+                cell_forecast_press = "нет данных"
+                logging.error(f"Нет данных по давлению. {time_of_day}")
+            try:
+                cell_forecast_hum = time_of_day.find('div', class_='cell-forecast-hum').text
+                logging.info(f"Влажность = {cell_forecast_hum}")
+            except:
+                cell_forecast_hum = "нет данных"
+                logging.error(f"Нет данных по влажности. {time_of_dayays}")
+            try:
+                cell_forecast_prec = time_of_day.find('div', class_='cell-forecast-prec').text
+                logging.info(f"Осадки = {cell_forecast_hum}")
+            except:
+                cell_forecast_prec = "нет данных"
+                logging.error(f"Нет данных по осадкам. {time_of_day}")
 
+            forecast_day_times.append(
+                {
+                "Год": calendar_year_chareds,
+                "Месяц": calendar_month_chareds,
+                "День": calendar_day_chareds,
+                "Время": cell_forecast_time,
+                "Погода": cell_forecast_main,
+                "Температура": cell_forecast_temp,
+                "Направление верта": cell_forecast_wind_direction,
+                "Сила ветра": cell_forecast_wind_strength,
+                "Давление": cell_forecast_press,
+                "Влажность": cell_forecast_hum,
+                "Осадки": cell_forecast_prec,
+                }
+            )
 
-
-    #     try:
-    #         calendar_day_chareds = int(calendar_month.split('-')[0])
-    #     except:
-    #         calendar_day_chareds = "нет данных"
-    #         logging.error(f"Нет дня. {days}")
-    #     try:
-    #         calendar_temp = days.find('span', class_='month-calendar-temp').text.replace(' ', '').split('\n')[:2]
-    #     except:
-    #         calendar_temp = ["Нет данных", "Нет данных"]
-    #         logging.error(f"Нет температуры. {days}")
-
-    #     calendar_temp_morning = calendar_temp[0]
-    #     calendar_temp_evening = calendar_temp[1]
-    #         # logging.info(f"{calendar_day_chareds} : {calendar_month_chareds} - Утром = {calendar_temp_morning}. Вечером = {calendar_temp_evening}")
             """
             На всякий пожарный
+            print(soup.a['data-peer-id'])
             >>> html = '<html><div><p>hello world 1</p></div><div><p>hello world 2</p></div> </html>'
             >>> re.findall(r'<p>([^<]+)</p>', html)
             ['hello world 1', 'hello world 2']
@@ -96,65 +143,34 @@ def sampling_month():
             "Солнце": info_sun,
             }
         )
-    #         forecast_day_times.append(
-    #             {
-    #             "Год": calendar_year_chareds,
-    #             "Месяц": calendar_month_chareds,
-    #             "День": calendar_day_chareds,
-    #             "Время": cell-forecast-time,
-    #             "Погода": cell-forecast-main,
-    #             "Температура": cell-forecast-temp,
-    #             "Направление верта": cell-forecast-wind-direction,
-    #             "Сила ветра": cell-forecast-wind-strength,
-    #             "Давление": cell-forecast-press,
-    #             "Влажность": cell-forecast-hum,
-    #             "Осадки": cell-forecast-prec,
-    #             }
-    #         )
+
     return forecast_day_info, forecast_day_times
 
-"""
-forecast_day_info.append(
-{
-"Год": calendar_year_chareds,
-"Месяц": calendar_month_chareds,
-"День": calendar_day_chareds,
-"Видимость": info_visibl,
-"Луна": info_moon,
-"Солнце": info_sun,
-}
-forecast-day-times.append(
-{
-"Год": calendar_year_charedsct,
-"Месяц": calendar_month_chareds,
-"День": calendar_day_chareds,
-"Время": cell-forecast-time,
-"Погода": cell-forecast-main,
-"Температура": cell-forecast-temp,
-"Направление верта": cell-forecast-wind-direction,
-"Сила ветра": cell-forecast-wind-strength,
-"Давление": cell-forecast-press,
-"Влажность": cell-forecast-hum,
-"Осадки": cell-forecast-prec,
-}
-)
 
+def save_csv(forecast_day_info, forecast_day_times):
+    try:
+        # Создание DataFrame
+        dfi = pd.DataFrame(forecast_day_info)
+        # Экспорт в CSV с помощью Pandas
+        dfi.to_csv('forecast_day_info.csv', index=False, sep=";", mode='a', header=False, encoding='utf-8')
+        logging.info("Данные forecast_day_info сохранены в CSV")
+    except:
+        logging.error(f"Ошибка сохранения файла forecast_day_info.csv.")
 
-"""
+    try:
+        # Создание DataFrame
+        dfd = pd.DataFrame(forecast_day_times)
+        # Экспорт в CSV с помощью Pandas
+        dfd.to_csv('forecast_day_times.csv', index=False, sep=";", mode='a', header=False, encoding='utf-8')
+        logging.info("Данные forecast_day_times сохранены в CSV")
+    except:
+        logging.error(f"Ошибка сохранения файла forecast_day_times.csv.")
 
-
-
-
-def save_csv(dann_temperatur):
-
-    # Создание DataFrame
-    df = pd.DataFrame(dann_temperatur)
-    # Экспорт в CSV с помощью Pandas
-    df.to_csv('output_with_pandas.csv', index=False, sep=";", mode='a', header=False, encoding='utf-8')
-    logging.info("Данные сохранены в CSV")
 
 
 if __name__ == '__main__':
     # pass
     # save_csv(sampling_month())
-    print(sampling_month())
+    derrsd, sdfdfdsf = sampling_month()
+    save_csv(derrsd, sdfdfdsf)
+    print("Готово")
