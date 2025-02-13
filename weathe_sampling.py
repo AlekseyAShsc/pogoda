@@ -173,7 +173,7 @@ def save_sql3(forecast_day_info, forecast_day_times):
         # Создание DataFrame
         dfi = pd.DataFrame(forecast_day_info)
         # Создание или подключение к базе данных
-        conn = sqlite3.connect("weather data.db")
+        conn = sqlite3.connect("weather_data_all.db")
         # Создание объекта курсора для выполнения SQL-запросов
         # cursor = conn.cursor()
         # Экспорт в SQL3 с помощью Pandas
@@ -192,7 +192,7 @@ def save_sql3(forecast_day_info, forecast_day_times):
         # Создание DataFrame
         dfd = pd.DataFrame(forecast_day_times)
         # Создание или подключение к базе данных
-        conn = sqlite3.connect("weather data.db")
+        conn = sqlite3.connect("weather_data_all.db")
         # Создание объекта курсора для выполнения SQL-запросов
         # cursor = conn.cursor()
         # Экспорт в SQL3 с помощью Pandas
